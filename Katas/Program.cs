@@ -8,33 +8,41 @@ var testString3 = "jchzalrnumimnmhp";
 var testString4 = "haegwjzuvuuyypxyu";
 var testString5 = "dvszwmarrgswjxmb";
 
-Console.WriteLine(IsStringNiceOrNasty(testString1));
-Console.WriteLine(IsStringNiceOrNasty(testString2));
-Console.WriteLine(IsStringNiceOrNasty(testString3));
-Console.WriteLine(IsStringNiceOrNasty(testString4));
-Console.WriteLine(IsStringNiceOrNasty(testString5));
+Console.WriteLine(IsStringNice(testString1) ? "nice" : "nasty");
+Console.WriteLine(IsStringNice(testString2) ? "nice" : "nasty");
+Console.WriteLine(IsStringNice(testString3) ? "nice" : "nasty");
+Console.WriteLine(IsStringNice(testString4) ? "nice" : "nasty");
+Console.WriteLine(IsStringNice(testString5) ? "nice" : "nasty");
 
-string IsStringNiceOrNasty(string rawString)
+string[] lines = File.ReadAllLines("KataData.txt");
+
+var i = 0;
+foreach (string line in lines)
+    if (IsStringNice(line))
+        i++;
+
+Console.WriteLine(i);
+
+bool IsStringNice(string rawString)
 {
-    
     if (occurencesOfChar(rawString) >= 3)
     {
         if (containsOneLetterAppearingTwice(rawString))
         {
             if (!containsDodgyString(rawString))
-                return $"{rawString}: nice";
+                return true;
         }
     }
-    return $"{rawString}: nasty";
+    return false;
 
     int occurencesOfChar(string s)
     {
         var vowels = "aeiou";
-        int numberOfVowells = 0;
+        int numberOfVowels = 0;
         foreach (char c in s)
             if (vowels.Contains(c))
-                numberOfVowells++;
-        return numberOfVowells;
+                numberOfVowels++;
+        return numberOfVowels;
     }
 
     bool containsOneLetterAppearingTwice(string rawString)
